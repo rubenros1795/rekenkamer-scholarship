@@ -64,14 +64,19 @@ def load_lda(lda_dir: str | Path) -> tuple[pd.DataFrame, pd.DataFrame, dict, dic
 
 def load_averaged_topics(lda_dir_500: str | Path) -> tuple[pd.DataFrame, dict]:
     """
-    Load pre-averaged topic distributions from the 500-topic model.
+    Load averaged_topics.csv from the 500-topic model.
 
-    Returns (dfd, ks) where dfd is indexed by date with string topic columns.
+    The CSV has per-speaker rows (member_or_speaker, party-ref, date, 0..499).
+    We group by date and average across speakers so dfd is one row per date.
+    Returns (dfd, ks500) where dfd is DatetimeIndex × string topic columns ("0".."499").
     """
     lda_dir_500 = Path(lda_dir_500)
-    dfd = pd.read_csv(lda_dir_500 / "averaged_topics.csv")
-    dfd["date"] = pd.to_datetime(dfd["date"])
-    dfd = dfd.set_index("date")
+    raw = pd.read_csv(lda_dir_500 / "averaged_topics.csv")
+    raw["date"] = pd.to_datetime(raw["date"])
+
+    # keep only numeric topic columns (named "0", "1", …)
+    topic_cols = [c for c in raw.columns if str(c).isdigit()]
+    dfd = raw.groupby("date")[topic_cols].mean()
 
     keys_path = lda_dir_500 / "topic-keys.txt"
     if keys_path.exists():
@@ -80,7 +85,7 @@ def load_averaged_topics(lda_dir_500: str | Path) -> tuple[pd.DataFrame, dict]:
     else:
         ks500 = {i: str(i) for i in range(500)}
 
-    print(f"averaged_topics: {len(dfd):,} rows  |  {dfd.shape[1]} topic columns")
+    print(f"averaged_topics: {len(dfd):,} dates  |  {len(topic_cols)} topics")
     return dfd, ks500
 
 

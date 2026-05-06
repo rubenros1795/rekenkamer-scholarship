@@ -29,7 +29,7 @@ LDA_DIR: Path = Path(
 LDA_DIR_500: Path = Path(
     os.environ.get(
         "REKENKAMER_LDA_DIR_500",
-        str(Path.home() / "Downloads" / "lda" / "lda" / "data-1945-2022-chunked"),
+        str(Path.home() / "Downloads" / "lda" / "data-1945-2022-chunked"),
     )
 )
 
