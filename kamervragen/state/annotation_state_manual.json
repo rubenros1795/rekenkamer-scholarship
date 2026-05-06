@@ -1,0 +1,776 @@
+{
+  "annotations": {
+    "0": {
+      "label": "VEC",
+      "modifiers": [],
+      "confidence": "M",
+      "notes": "",
+      "commissie": "",
+      "annotator": ""
+    },
+    "1": {
+      "label": "VEC",
+      "modifiers": [
+        "+CAB"
+      ],
+      "confidence": "M",
+      "notes": "",
+      "commissie": "Commissie voor de Rijksuitgaven",
+      "annotator": ""
+    },
+    "2": {
+      "label": "INF",
+      "modifiers": [],
+      "confidence": "M",
+      "commissie": "Commissie voor de Rijksuitgaven",
+      "annotator": "",
+      "notes": ""
+    },
+    "27": {
+      "label": "AGN",
+      "confidence": "H",
+      "notes": ""
+    },
+    "106": {
+      "label": "AGN",
+      "confidence": "H",
+      "notes": ""
+    },
+    "509": {
+      "label": "OOR",
+      "confidence": "H",
+      "notes": ""
+    },
+    "847": {
+      "label": "OOR",
+      "confidence": "H",
+      "notes": ""
+    },
+    "292": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1367": {
+      "label": "OOR",
+      "confidence": "H",
+      "notes": ""
+    },
+    "275": {
+      "label": "OOR",
+      "confidence": "L",
+      "notes": ""
+    },
+    "738": {
+      "label": "OOR",
+      "confidence": "H",
+      "notes": ""
+    },
+    "1457": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "696": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "391": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "454": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "28": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "651": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "427": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1049": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "29": {
+      "label": "CAU",
+      "confidence": "H",
+      "notes": ""
+    },
+    "983": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1545": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1315": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "996": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "510": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "143": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1063": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1227": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1323": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "776": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1703": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "258": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "644": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1356": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "793": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1320": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "192": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "232": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1409": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1070": {
+      "label": "AGN",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1275": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1581": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "527": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "81": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1216": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1707": {
+      "label": "AGN",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1536": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "158": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1189": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "705": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "480": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "885": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "95": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "222": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1364": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "904": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "617": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1166": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1343": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "35": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "288": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1366": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1341": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "937": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "113": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "468": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "17": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "428": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1155": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "314": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1551": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1198": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "760": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "167": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "147": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1650": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "605": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "918": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "170": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1587": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1528": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "790": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "362": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1140": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1200": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1573": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "815": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1434": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "110": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "948": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1342": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1539": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "247": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "897": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "588": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "458": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "833": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1663": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "435": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1746": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1460": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1550": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1600": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1003": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "830": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1552": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1120": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1277": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "263": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1666": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "274": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1214": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "481": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "841": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "398": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1606": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "1509": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "30": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "31": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "32": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "33": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "34": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "36": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "37": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "38": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "39": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "40": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "41": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "42": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "43": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "44": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "45": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "46": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "47": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "48": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "49": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "50": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "51": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "52": {
+      "label": "ADV",
+      "confidence": "M",
+      "notes": ""
+    },
+    "53": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "54": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "55": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "56": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "57": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "58": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "59": {
+      "label": "OOR",
+      "confidence": "M",
+      "notes": ""
+    },
+    "60": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "61": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "62": {
+      "label": "FEIT",
+      "confidence": "M",
+      "notes": ""
+    },
+    "63": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    },
+    "64": {
+      "label": "CAU",
+      "confidence": "M",
+      "notes": ""
+    }
+  },
+  "autocomplete": {
+    "commissie": [
+      "Commissie voor de Rijksuitgaven"
+    ],
+    "annotator": []
+  }
+}

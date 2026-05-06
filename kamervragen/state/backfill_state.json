@@ -1,0 +1,119 @@
+{
+  "batch_id": "msgbatch_01FfbTUFshbmpnMrqhphHCco",
+  "id_map": {
+    "0": {
+      "src_id": "rekenkamer__kamerstuk:2012:05:03:beantwoording-kamervragen-over-het-rapport-prestaties-in-de-strafrechtketen",
+      "src_title": "Beantwoording Kamervragen over het rapport Prestaties in de strafrechtketen",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2012/05/03/beantwoording-kamervragen-over-het-rapport-prestaties-in-de-strafrechtketen/Beantwoording+TK+vragen+Strafrechtketen.pdf",
+      "src_published_at": "2012-05-03"
+    },
+    "1": {
+      "src_id": "rekenkamer__kamerstuk:2012:09:14:beantwoording-kamervragen-over-het-rapport-publieke-organisaties-en-private",
+      "src_title": "Beantwoording Kamervragen over het rapport Publieke organisaties en private activiteiten",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2012/09/14/beantwoording-kamervragen-over-het-rapport-publieke-organisaties-en-private/Beantwoording+TK+vragne+publieke+organisaties.pdf",
+      "src_published_at": "2012-09-14"
+    },
+    "2": {
+      "src_id": "rekenkamer__kamerstuk:2013:04:18:beantwoording-kamervragen-over-het-eu-trendrapport-2013",
+      "src_title": "Beantwoording Kamervragen over het EU-trendrapport 2013",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2013/04/18/beantwoording-kamervragen-over-het-eu-trendrapport-2013/Brief+TK+Beantwoording+TK-vragen+EU-trendrapport+2013.pdf",
+      "src_published_at": "2013-04-18"
+    },
+    "3": {
+      "src_id": "rekenkamer__kamerstuk:2014:04:03:beantwoording-kamervragen-over-het-eu-trendrapport-2014",
+      "src_title": "Beantwoording Kamervragen over het EU-trendrapport 2014",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2014/04/03/beantwoording-kamervragen-over-het-eu-trendrapport-2014/Beantwoording_vragen_TK_EU-trendrapport_2014.pdf",
+      "src_published_at": "2014-04-03"
+    },
+    "4": {
+      "src_id": "rekenkamer__kamerstuk:2014:05:26:beantwoording-kamervragen-over-het-rapport-bestrijden-witwassen-stand-van-zaken-2013",
+      "src_title": "Beantwoording Kamervragen over het rapport Bestrijden witwassen: stand van zaken 2013",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2014/05/26/beantwoording-kamervragen-over-het-rapport-bestrijden-witwassen-stand-van-zaken-2013/Beantwoording_vragen_TK_rapport_Bestrijden_witwassen.pdf",
+      "src_published_at": "2014-05-26"
+    },
+    "5": {
+      "src_id": "rekenkamer__kamerstuk:2015:02:26:beantwoording-kamervragen-over-het-rapport-belastingontwijking",
+      "src_title": "Beantwoording Kamervragen over het rapport Belastingontwijking",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2015/02/26/beantwoording-kamervragen-over-het-rapport-belastingontwijking/Brief_met_antwoorden_Kamervragen.pdf",
+      "src_published_at": "2015-02-26"
+    },
+    "6": {
+      "src_id": "rekenkamer__kamerstuk:2015:05:28:beantwoording-kamervragen-over-het-rapport-de-staat-als-aandeelhouder",
+      "src_title": "Beantwoording Kamervragen over het rapport De staat als aandeelhouder",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2015/05/28/beantwoording-kamervragen-over-het-rapport-de-staat-als-aandeelhouder/Beantwoording_TKvragen_rapport_Staat_aandeelhouder.pdf",
+      "src_published_at": "2015-05-28"
+    },
+    "7": {
+      "src_id": "rekenkamer__kamerstuk:2016:06:06:beantwoording-kamervragen-over-het-rapport-resultaten-verantwoordingsonderzoek-2015-bij-het-ministerie-van-economische-zaken-en-diergezondheidsfonds",
+      "src_title": "Beantwoording Kamervragen over het rapport Resultaten verantwoordingsonderzoek 2015 bij het Ministerie van Economische Zaken en Diergezondheidsfonds",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2016/06/06/beantwoording-kamervragen-over-het-rapport-resultaten-verantwoordingsonderzoek-2015-bij-het-ministerie-van-economische-zaken-en-diergezondheidsfonds/Brief_AR_aan_EZ.pdf",
+      "src_published_at": "2016-06-06"
+    },
+    "8": {
+      "src_id": "rekenkamer__kamerstuk:2016:06:09:beantwoording-kamervragen-op-het-rapport-resultaten-verantwoordingsonderzoek-2015-bij-het-ministerie-van-vws",
+      "src_title": "Beantwoording Kamervragen over het rapport Resultaten verantwoordingsonderzoek 2015 bij het Ministerie van VWS",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2016/06/09/beantwoording-kamervragen-op-het-rapport-resultaten-verantwoordingsonderzoek-2015-bij-het-ministerie-van-vws/Antwoorden+op+Kamervragen+Resultaten+verantwoordingsonderzoek+2015+VWS.pdf",
+      "src_published_at": "2016-06-09"
+    },
+    "9": {
+      "src_id": "rekenkamer__kamerstuk:2017:06:01:beantwoording-kamervragen-over-het-rapport-zicht-op-belastingverlichtende-regelingen",
+      "src_title": "Beantwoording Kamervragen over het Rapport Zicht op belastingverlichtende regelingen",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2017/06/01/beantwoording-kamervragen-over-het-rapport-zicht-op-belastingverlichtende-regelingen/Beantwoording_Kamervragen_rapport_Zicht_op_belastingverlichtende_regelingen.pdf",
+      "src_published_at": "2017-06-01"
+    },
+    "10": {
+      "src_id": "rekenkamer__kamerstuk:2017:06:08:beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2016-bij-het-ministerie-van-ocw",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Resultaten verantwoordingsonderzoek 2016 bij het Ministerie van OCW",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2017/06/08/beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2016-bij-het-ministerie-van-ocw/Beantwoording_vragen_Tweede_Kamer_over_de_Resultaten_verantwoordingsonderzoek_2016_bij_het_Ministerie_van_OCW.pdf",
+      "src_published_at": "2017-06-08"
+    },
+    "11": {
+      "src_id": "rekenkamer__kamerstuk:2017:06:12:beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2016-de-staat-van-de-rijksverantwoording",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Resultaten verantwoordingsonderzoek 2016, de Staat van de rijksverantwoording",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2017/06/12/beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2016-de-staat-van-de-rijksverantwoording/Beantwoording_vragen_Tweede_Kamer_over_het_rapport_Staat_van_de_rijksverantwoording_2016.pdf",
+      "src_published_at": "2017-06-12"
+    },
+    "12": {
+      "src_id": "rekenkamer__kamerstuk:2021:06:08:beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2020-bij-de-staat-van-de-rijksverantwoording",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Resultaten verantwoordingsonderzoek 2020 bij de Staat van de rijksverantwoording",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2021/06/08/beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2020-bij-de-staat-van-de-rijksverantwoording/Beantwoording+Kamervragen+VO+2020+SRV.pdf",
+      "src_published_at": "2021-06-08"
+    },
+    "13": {
+      "src_id": "rekenkamer__kamerstuk:2021:06:08:beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2020-bij-het-ministerie-van-financien-en-nationale-schuld",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Resultaten verantwoordingsonderzoek 2020 bij het Ministerie van Financiën en Nationale Schuld",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2021/06/08/beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2020-bij-het-ministerie-van-financien-en-nationale-schuld/Beantwoording+Kamervragen+VO+2020+Financien+en+Nationale+Schuld.pdf",
+      "src_published_at": "2021-06-08"
+    },
+    "14": {
+      "src_id": "rekenkamer__kamerstuk:2022:06:08:beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2021-bij-het-ministerie-van-vws",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Resultaten verantwoordingsonderzoek 2021 bij het Ministerie van VWS",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2022/06/08/beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2021-bij-het-ministerie-van-vws/Beantwoording+Kamervragen+VWS+2021.pdf",
+      "src_published_at": "2022-06-08"
+    },
+    "15": {
+      "src_id": "rekenkamer__kamerstuk:2022:06:08:beantwoording-vragen-tweede-kamer-over-de-staat-van-de-rijksverantwoording-2021",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Staat van de rijksverantwoording 2021",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2022/06/08/beantwoording-vragen-tweede-kamer-over-de-staat-van-de-rijksverantwoording-2021/Beantwoording+Kamervragen+Staat+vd+rijksverantwoording+2021.pdf",
+      "src_published_at": "2022-06-08"
+    },
+    "16": {
+      "src_id": "rekenkamer__kamerstuk:2023:06:06:beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2022-bij-het-ministerie-van-vws",
+      "src_title": "Beantwoording vragen Tweede Kamer over de Resultaten verantwoordingsonderzoek 2022 bij het Ministerie van VWS",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2023/06/06/beantwoording-vragen-tweede-kamer-over-de-resultaten-verantwoordingsonderzoek-2022-bij-het-ministerie-van-vws/Beantwoording+Kamervragen+VO+VWS.pdf",
+      "src_published_at": "2023-06-06"
+    },
+    "17": {
+      "src_id": "rekenkamer__kamerstuk:2025:06:10:beantwoording-vragen-tweede-kamer-over-het-verantwoordingsonderzoek-2024-bij-het-ministerie-van-justitie-en-veiligheid",
+      "src_title": "Beantwoording vragen Tweede Kamer over het Verantwoordingsonderzoek 2024 bij het ministerie van Justitie en Veiligheid",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2025/06/10/beantwoording-vragen-tweede-kamer-over-het-verantwoordingsonderzoek-2024-bij-het-ministerie-van-justitie-en-veiligheid/Beantwoording+Kamervragen+VO+2024+JenV.pdf",
+      "src_published_at": "2025-06-10"
+    },
+    "18": {
+      "src_id": "rekenkamer__kamerstuk:2025:06:10:beantwoording-vragen-tweede-kamer-over-het-verantwoordingsonderzoek-2024-bij-het-ministerie-van-volksgezondheid-welzijn-en-sport",
+      "src_title": "Beantwoording vragen Tweede Kamer over het Verantwoordingsonderzoek 2024 bij het ministerie van Volksgezondheid, Welzijn en Sport",
+      "src_url": "https://www.rekenkamer.nl/binaries/rekenkamer/documenten/kamerstukken/2025/06/10/beantwoording-vragen-tweede-kamer-over-het-verantwoordingsonderzoek-2024-bij-het-ministerie-van-volksgezondheid-welzijn-en-sport/Beantwoording+Kamervragen+VO+2024+VWS.pdf",
+      "src_published_at": "2025-06-10"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+# Secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.uv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Large / binary data (kept in ~/Documents/Data/rekenkamer/)
+*.xlsx
+*.sqlite
+*.db
+*.zip
+*.parquet
+# Uncomment to also exclude heavy CSVs if needed:
+# results/hits.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
