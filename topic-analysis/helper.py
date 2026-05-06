@@ -1,23 +1,18 @@
 """
-helper.py — Data loading and visualisation helpers for hits.ipynb.
+helper.py — Data loading and visualisation helpers for analysis.ipynb.
 
-Keeps the notebook cells focused on narrative and figures.  Import with:
+Keeps notebook cells focused on narrative and figures.  Import with:
     from helper import *
-or selectively:
-    from helper import load_all, plot_freq_entropy, trending_topics
 """
 
 from __future__ import annotations
 
 import warnings
-import os
 from pathlib import Path
-from typing import Optional
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
 import seaborn as sns
 from scipy.stats import entropy
 from scipy.special import softmax
@@ -25,7 +20,6 @@ from statsmodels.nonparametric.smoothers_lowess import lowess
 
 warnings.filterwarnings("ignore")
 
-# ── Default style ──────────────────────────────────────────────────────────────
 plt.rcParams.update({
     "font.family": "sans-serif",
     "axes.spines.top": False,
@@ -33,35 +27,26 @@ plt.rcParams.update({
     "figure.dpi": 120,
 })
 
-_PERIOD_COLORS = {"H1": "#4878CF", "H2": "#D65F5F"}
-
 # ─────────────────────────────────────────────────────────────────────────────
 # DATA LOADING
 # ─────────────────────────────────────────────────────────────────────────────
 
-def load_hits(path: str | Path) -> pd.DataFrame:
-    """Load hits.csv, parse dates, drop rows without a date."""
+def load_references(path: str | Path) -> pd.DataFrame:
+    """Load references.csv, parse dates, drop rows without a date."""
     df = pd.read_csv(path, sep="\t", dtype=str, low_memory=False)
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
     df = df.dropna(subset=["date"])
-    print(f"hits: {len(df):,} rows  |  date range: {df.date.min().date()} – {df.date.max().date()}")
+    print(f"references: {len(df):,} rows  |  {df.date.min().date()} – {df.date.max().date()}")
     return df
 
 
 def load_lda(lda_dir: str | Path) -> tuple[pd.DataFrame, pd.DataFrame, dict, dict]:
     """
-    Load LDA outputs from *lda_dir*.
+    Load 300-topic LDA outputs from *lda_dir*.
 
-    Returns
-    -------
-    dist : DataFrame
-        Document-topic distributions with a 'date' column added.
-    meta : DataFrame
-        Metadata (same row order as dist).
-    topic_label : dict[int, str]
-        Full label string per topic id.
-    ks : dict[int, str]
-        Top-10 keywords (comma-joined) per topic id.
+    Returns (dist, meta, topic_label, ks).
+    dist has integer topic columns 0-299 plus a 'date' column.
+    ks maps topic_id → comma-joined top-10 keywords.
     """
     lda_dir = Path(lda_dir)
     dist = pd.read_csv(lda_dir / "doc-topics.txt", sep="\t", header=None).iloc[:, 2:]
@@ -75,6 +60,28 @@ def load_lda(lda_dir: str | Path) -> tuple[pd.DataFrame, pd.DataFrame, dict, dic
 
     print(f"dist: {len(dist):,} docs  |  {dist.shape[1] - 1} topics")
     return dist, meta, topic_label, ks
+
+
+def load_averaged_topics(lda_dir_500: str | Path) -> tuple[pd.DataFrame, dict]:
+    """
+    Load pre-averaged topic distributions from the 500-topic model.
+
+    Returns (dfd, ks) where dfd is indexed by date with string topic columns.
+    """
+    lda_dir_500 = Path(lda_dir_500)
+    dfd = pd.read_csv(lda_dir_500 / "averaged_topics.csv")
+    dfd["date"] = pd.to_datetime(dfd["date"])
+    dfd = dfd.set_index("date")
+
+    keys_path = lda_dir_500 / "topic-keys.txt"
+    if keys_path.exists():
+        keys = pd.read_csv(keys_path, sep="\t", header=None)
+        ks500 = dict(zip(keys[0], keys[2].str.split(" ").str[:10].str.join(", ")))
+    else:
+        ks500 = {i: str(i) for i in range(500)}
+
+    print(f"averaged_topics: {len(dfd):,} rows  |  {dfd.shape[1]} topic columns")
+    return dfd, ks500
 
 
 def load_noun_totals(path: str | Path) -> pd.DataFrame:
@@ -92,13 +99,15 @@ def load_cabinets(path: str | Path) -> pd.DataFrame:
     return cab
 
 
-def load_all(hits_path, lda_dir, noun_total_path, cabinet_path=None):
-    """Convenience loader — returns (hits, dist, meta, ks, total_nouns, cab)."""
-    hits = load_hits(hits_path)
+def load_all(references_path, lda_dir, noun_total_path, cabinet_path=None):
+    """Convenience loader for the 300-topic / references analysis.
+    Returns (refs, dist, meta, ks, total_nouns, cab).
+    """
+    refs = load_references(references_path)
     dist, meta, topic_label, ks = load_lda(lda_dir)
     total_nouns = load_noun_totals(noun_total_path)
     cab = load_cabinets(cabinet_path) if cabinet_path else None
-    return hits, dist, meta, ks, total_nouns, cab
+    return refs, dist, meta, ks, total_nouns, cab
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -110,35 +119,31 @@ def to_half_year(s: pd.Series) -> pd.Series:
     return s.dt.year.astype(str) + np.where(s.dt.month <= 6, "-H1", "-H2")
 
 
-def add_periods(hits: pd.DataFrame, dist: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Add 'period' column and flag dist rows that appear in hits."""
-    hits = hits.copy()
+def add_periods(refs: pd.DataFrame, dist: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Add 'period' column to both DataFrames and flag dist rows that appear in refs."""
+    refs = refs.copy()
     dist = dist.copy()
-    hits["period"] = to_half_year(hits["date"])
+    refs["period"] = to_half_year(refs["date"])
     dist["period"] = to_half_year(dist["date"])
-    dist["in_hits"] = dist["date"].isin(set(hits["date"]))
-    print(f"hit dates: {dist['in_hits'].sum():,} / {len(dist):,} dist rows flagged")
-    return hits, dist
+    dist["in_refs"] = dist["date"].isin(set(refs["date"]))
+    print(f"flagged: {dist['in_refs'].sum():,} / {len(dist):,} dist rows")
+    return refs, dist
 
 
-def relative_frequency(hits: pd.DataFrame, total_nouns: pd.DataFrame) -> pd.DataFrame:
+def relative_frequency(refs: pd.DataFrame, total_nouns: pd.DataFrame) -> pd.DataFrame:
     """
-    Compute daily hit frequency and normalise by total noun count.
-
-    Returns a daily DataFrame with columns: date, f, rf
+    Compute daily reference count and normalise by total noun count.
+    Returns a daily DataFrame with columns: date, f, rf.
     """
     date_to_count = dict(zip(pd.to_datetime(total_nouns["date"]), total_nouns["count"]))
-    daily = hits.groupby("date").size().reset_index(name="f")
+    daily = refs.groupby("date").size().reset_index(name="f")
     daily = daily[daily["date"].dt.year > 1848]
     daily["rf"] = daily["f"] / daily["date"].map(date_to_count)
     return daily
 
 
 def quarterly_stats(daily: pd.DataFrame, lowess_frac: float = 0.05) -> pd.DataFrame:
-    """
-    Aggregate daily rf to quarters; compute entropy and summed rf.
-    Adds LOESS-smoothed columns loess_entropy and loess_sum.
-    """
+    """Aggregate daily rf to quarters; adds LOESS-smoothed loess_entropy and loess_sum."""
     q = (
         daily
         .assign(quarter=lambda df: df["date"].dt.to_period("Q").dt.to_timestamp())
@@ -153,14 +158,10 @@ def quarterly_stats(daily: pd.DataFrame, lowess_frac: float = 0.05) -> pd.DataFr
     return q
 
 
-def classify_coalition(hits: pd.DataFrame, cab: pd.DataFrame) -> pd.DataFrame:
-    """
-    Add a 'coalition_status' column: 'government' | 'coalition party' | 'opposition party'.
-    Rows where status cannot be determined are None.
-    """
-    hits = hits.copy()
-    hits["party_code"] = hits["party-ref"].str.split(".").str[-1].str.lower()
-
+def classify_coalition(refs: pd.DataFrame, cab: pd.DataFrame) -> pd.DataFrame:
+    """Add 'coalition_status': 'government' | 'coalition party' | 'opposition party'."""
+    refs = refs.copy()
+    refs["party_code"] = refs["party-ref"].str.split(".").str[-1].str.lower()
     gov_roles = {"minister", "staatssecretaris", "premier", "mp-minister", "government"}
 
     def _classify(row):
@@ -173,47 +174,43 @@ def classify_coalition(hits: pd.DataFrame, cab: pd.DataFrame) -> pd.DataFrame:
             return "government"
         return "coalition party" if row["party_code"] in coalition_parties else "opposition party"
 
-    hits["coalition_status"] = hits.apply(_classify, axis=1)
-    return hits.drop(columns=["party_code"])
+    refs["coalition_status"] = refs.apply(_classify, axis=1)
+    return refs.drop(columns=["party_code"])
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# PARTIAL CORRELATION
+# PARTIAL CORRELATION (references ↔ topics)
 # ─────────────────────────────────────────────────────────────────────────────
 
 TOPIC_COLS = list(range(300))
 MIN_OBS = 30
 
 
-def build_dam(dist: pd.DataFrame, hits: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+def build_dam(dist: pd.DataFrame, refs: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     """
-    Align topic distributions with hit counts per date.
-
-    Returns (dam, hits_day) where dam is the topic matrix and
-    hits_day is the daily hit count indexed by date.
+    Align topic distributions with reference counts per date.
+    Returns (dam, refs_day).
     """
-    daily_hits = hits.groupby("date").size().rename("Y")
+    daily_refs = refs.groupby("date").size().rename("Y")
     dam = dist.set_index("date")[TOPIC_COLS].copy()
-    dam["Y"] = dam.index.map(daily_hits)
+    dam["Y"] = dam.index.map(daily_refs)
     dam = dam.dropna(subset=["Y"])
-    hits_day = dam.pop("Y")
+    refs_day = dam.pop("Y")
     print(f"dam: {len(dam):,} docs  |  {dam.index.nunique():,} unique dates")
-    return dam, hits_day
+    return dam, refs_day
 
 
 def pcorr_over_time(
     dam: pd.DataFrame,
-    hits_day: pd.Series,
+    refs_day: pd.Series,
     min_obs: int = MIN_OBS,
 ) -> pd.DataFrame:
     """
-    Compute quarterly partial correlations between each topic and hit frequency.
-
-    Uses precision-matrix inversion (pinv) per quarter.
-    Returns a long DataFrame: period, topic, partial_corr.
+    Quarterly partial correlations between each topic and reference frequency.
+    Returns long DataFrame: period, topic, partial_corr.
     """
     df = dam.copy()
-    df["Y"] = hits_day
+    df["Y"] = refs_day
     df = df.dropna()
     out = []
     for p, g in df.groupby(df.index.to_period("Q")):
@@ -249,47 +246,26 @@ def topic_corr_matrix(dist_subset: pd.DataFrame) -> pd.DataFrame:
 # TOPIC RANKING
 # ─────────────────────────────────────────────────────────────────────────────
 
-def trending_topics(
-    resp: pd.DataFrame,
-    n: int = 15,
-    ewm_span: int = 12,
-) -> pd.Series:
-    """
-    Return the top-N topics by Mann-Kendall trend slope in their
-    EWM-smoothed partial-correlation time series.
-    """
+def trending_topics(resp: pd.DataFrame, n: int = 15, ewm_span: int = 12) -> pd.Series:
+    """Top-N topics by Mann-Kendall trend slope in their EWM partial-correlation series."""
     try:
         from pymannkendall import original_test as pmk
     except ImportError:
         raise ImportError("pip install pymannkendall")
-    return (
-        resp.ewm(span=ewm_span).mean()
-        .apply(lambda x: pmk(x).slope)
-        .nlargest(n)
-    )
+    return resp.ewm(span=ewm_span).mean().apply(lambda x: pmk(x).slope).nlargest(n)
 
 
-def topic_scatter_data(
-    resp: pd.DataFrame,
-    dist_averaged: pd.DataFrame,
-    ewm_span: int = 12,
-) -> pd.DataFrame:
-    """
-    Build bubble-chart data: variance, mean, max partial-corr per topic,
-    plus a z-score of the topic's overall prominence in the corpus.
-    """
+def topic_scatter_data(resp: pd.DataFrame, dist_averaged: pd.DataFrame, ewm_span: int = 12) -> pd.DataFrame:
+    """Bubble-chart data: variance, mean, max partial-corr + corpus prominence z-score."""
     from scipy.stats import zscore as _zscore
-
     zscores_raw = (
-        dist_averaged
-        .ewm(span=ewm_span).mean()
+        dist_averaged.ewm(span=ewm_span).mean()
         .pipe(lambda df: pd.DataFrame(
             _zscore(df.values, axis=1), index=df.index, columns=df.columns
         ))
         .mean()
     )
     topic_z = pd.Series(np.log2(softmax(zscores_raw.values)), index=zscores_raw.index)
-
     return pd.DataFrame({
         "variance": resp.var(axis=0),
         "mean_corr": resp.mean(axis=0),
@@ -299,7 +275,72 @@ def topic_scatter_data(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# VISUALISATION
+# CONTROL TOPICS (500-topic model)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def plot_control_topics(
+    dfd: pd.DataFrame,
+    control_topics: list[int],
+    ks500: dict,
+    *,
+    ewm_span: int = 8,
+    figsize: tuple = (12, 4),
+    title: str = "Evaluation / oversight topics over time",
+) -> plt.Figure:
+    """Line chart of EWM-smoothed topic proportions for a set of control topics."""
+    annual = dfd.groupby(dfd.index.year).mean().ewm(span=ewm_span).mean()
+    fig, ax = plt.subplots(figsize=figsize)
+    for t in control_topics:
+        col = str(t)
+        if col in annual.columns:
+            label = f"{t}: {ks500.get(t, '')[:40]}"
+            annual[col].ewm(span=ewm_span).mean().plot(ax=ax, label=label)
+    ax.set_title(title, loc="left")
+    ax.set_xlabel("")
+    ax.legend(fontsize=7, frameon=False, loc="upper left")
+    fig.tight_layout()
+    return fig
+
+
+def verantwoordingsdag_test(
+    dfd: pd.DataFrame,
+    topic_ids: list[int],
+    year_range: range | None = None,
+) -> pd.DataFrame:
+    """
+    Test whether topic proportions are significantly elevated on Verantwoordingsdag
+    (third Wednesday of May) relative to the rest of the year.
+
+    Returns a DataFrame with columns: topic, mean_vdag, mean_other, t_stat, p_value.
+    """
+    from scipy.stats import ttest_ind
+
+    if year_range is None:
+        year_range = range(dfd.index.year.min(), dfd.index.year.max() + 1)
+
+    third_wednesdays = []
+    for y in year_range:
+        may = pd.date_range(f"{y}-05-01", f"{y}-05-31", freq="D")
+        wednesdays = may[may.dayofweek == 2]
+        if len(wednesdays) >= 3:
+            third_wednesdays.append(wednesdays[2])
+
+    vdag_idx = dfd.index.normalize().isin([d.normalize() for d in third_wednesdays])
+    results = []
+    for t in topic_ids:
+        col = str(t)
+        if col not in dfd.columns:
+            continue
+        v = dfd.loc[vdag_idx, col].dropna()
+        o = dfd.loc[~vdag_idx, col].dropna()
+        stat, p = ttest_ind(v, o, equal_var=False)
+        results.append({"topic": t, "mean_vdag": v.mean(), "mean_other": o.mean(),
+                        "t_stat": stat, "p_value": p})
+    return pd.DataFrame(results)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VISUALISATION — REFERENCES OVER TIME
 # ─────────────────────────────────────────────────────────────────────────────
 
 def plot_freq_entropy(
@@ -309,36 +350,22 @@ def plot_freq_entropy(
     title: str = "References to the Court of Audit over time",
     figsize: tuple = (12, 4),
 ) -> plt.Figure:
-    """
-    Dual-axis chart: summed relative frequency (filled) + entropy (line).
-
-    Parameters
-    ----------
-    quarterly : output of quarterly_stats()
-    """
+    """Dual-axis chart: summed relative frequency (filled) + entropy (line)."""
     fig, ax = plt.subplots(figsize=figsize)
     ax2 = ax.twinx()
-
     ax2.fill_between(quarterly["quarter"], quarterly["loess_sum"],
                      color="#D65F5F", alpha=0.25, label="Summed frequency")
     ax.plot(quarterly["quarter"], quarterly["loess_entropy"],
             color="#4878CF", linewidth=1.5, label="Entropy")
-
-    for spine, color in [("left", "#4878CF"), ("right", "#D65F5F")]:
-        ax.spines[spine].set_color(color) if spine == "left" else ax2.spines[spine].set_color(color)
-    ax.tick_params(axis="y", colors="#4878CF")
-    ax2.tick_params(axis="y", colors="#D65F5F")
-    ax.yaxis.label.set_color("#4878CF")
-    ax2.yaxis.label.set_color("#D65F5F")
-
+    for spine, a, color in [("left", ax, "#4878CF"), ("right", ax2, "#D65F5F")]:
+        a.spines[spine].set_color(color)
+        a.tick_params(axis="y", colors=color)
     ax.set_xlim(pd.Timestamp("1849-01-01"), pd.Timestamp("2022-01-01"))
     bottom = quarterly["loess_sum"].min() - (quarterly["loess_sum"].max() - quarterly["loess_sum"].min()) * 0.1
     ax2.set_ylim(bottom, quarterly["loess_sum"].max())
-
     if war_shade:
         ax.axvspan(pd.Timestamp("1940-01-01"), pd.Timestamp("1946-01-01"),
                    color="grey", alpha=0.15, zorder=0)
-
     ax.set_title(title, loc="left")
     fig.autofmt_xdate()
     fig.tight_layout()
@@ -346,28 +373,24 @@ def plot_freq_entropy(
 
 
 def plot_weekly_heatmap(
-    hits: pd.DataFrame,
+    refs: pd.DataFrame,
     *,
     year_start: int = 1940,
     period_size: int = 5,
     figsize: tuple = (14, 6),
-    title: str = "Hit distribution by week-of-year (5-year bins)",
+    title: str = "Reference distribution by week-of-year (5-year bins)",
 ) -> plt.Figure:
-    """Heatmap of weekly hit distribution, binned into 5-year periods."""
+    """Heatmap of weekly reference distribution, binned into 5-year periods."""
     monthly = (
-        hits
-        .groupby([hits.date.dt.year // period_size * period_size,
-                  hits.date.dt.isocalendar().week])
-        .size()
-        .unstack()
-        .fillna(0)
+        refs
+        .groupby([refs.date.dt.year // period_size * period_size,
+                  refs.date.dt.isocalendar().week])
+        .size().unstack().fillna(0)
     )
     monthly = monthly.div(monthly.sum(axis=1), axis=0)
-    subset = monthly[monthly.index > year_start]
-
     fig, ax = plt.subplots(figsize=figsize)
-    sns.heatmap(subset, cmap="Blues", vmax=0.1, vmin=0.01, cbar=False,
-                ax=ax, linewidths=0)
+    sns.heatmap(monthly[monthly.index > year_start], cmap="Blues",
+                vmax=0.1, vmin=0.01, cbar=False, ax=ax, linewidths=0)
     ax.set_title(title, loc="left")
     ax.set_xlabel("Week of year")
     ax.set_ylabel(f"{period_size}-year period")
@@ -376,19 +399,17 @@ def plot_weekly_heatmap(
 
 
 def plot_coalition_area(
-    hits: pd.DataFrame,
+    refs: pd.DataFrame,
     *,
     year_start: int = 1945,
     figsize: tuple = (12, 4),
-    title: str = "Who asks about the Court of Audit?",
+    title: str = "Who references the Court of Audit?",
 ) -> plt.Figure:
     """Stacked area chart of coalition status shares over time."""
-    dfs = hits[(hits["house"] == "commons") & (hits["date"].dt.year > year_start)]
+    dfs = refs[(refs["house"] == "commons") & (refs["date"].dt.year > year_start)]
     shares = (
         dfs.groupby(dfs["date"].dt.year)["coalition_status"]
-        .value_counts(normalize=True)
-        .unstack()
-        .fillna(0)
+        .value_counts(normalize=True).unstack().fillna(0)
     )
     fig, ax = plt.subplots(figsize=figsize)
     shares.plot(kind="area", ax=ax, alpha=0.75)
@@ -400,6 +421,10 @@ def plot_coalition_area(
     return fig
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# VISUALISATION — TOPIC ANALYSIS
+# ─────────────────────────────────────────────────────────────────────────────
+
 def plot_topic_timeseries(
     resp: pd.DataFrame,
     dist_averaged: pd.DataFrame,
@@ -409,25 +434,19 @@ def plot_topic_timeseries(
     ewm_span: int = 20,
     figsize: tuple = (12, 4),
 ) -> plt.Figure:
-    """
-    Plot partial-corr with hits (blue) vs. overall topic prevalence (red) for one topic.
-    """
+    """Partial-corr with references (blue) vs. overall topic prevalence (red) for one topic."""
     label = f"{topic_id} {ks[topic_id]}"
+    if label not in resp.columns:
+        raise KeyError(f"Topic {topic_id} not in resp columns — check ks dict")
     fig, ax = plt.subplots(figsize=figsize)
     ax2 = ax.twinx()
-
-    series = resp[label].ewm(span=ewm_span).mean() if label in resp.columns else resp.get(str(topic_id))
-    if series is None:
-        raise KeyError(f"Topic {topic_id} not found in resp columns")
-
+    series = resp[label].ewm(span=ewm_span).mean()
     series.index = pd.PeriodIndex(series.index, freq="Q").to_timestamp()
     series.plot(ax=ax, color="#4878CF", linewidth=1.5)
-
-    dist_series = dist_averaged[topic_id].ewm(span=ewm_span).mean()
-    dist_series.plot(ax=ax2, color="#D65F5F", linewidth=1.5, linestyle="--")
-
+    dist_averaged[topic_id].ewm(span=ewm_span).mean().plot(ax=ax2, color="#D65F5F",
+                                                            linewidth=1.5, linestyle="--")
     ax.set_title(f"Topic {topic_id}: {ks[topic_id][:60]}", loc="left")
-    ax.set_ylabel("Partial corr with hits", color="#4878CF")
+    ax.set_ylabel("Partial corr with references", color="#4878CF")
     ax2.set_ylabel("Topic prevalence (corpus)", color="#D65F5F")
     ax.tick_params(axis="y", colors="#4878CF")
     ax2.tick_params(axis="y", colors="#D65F5F")
@@ -441,35 +460,24 @@ def plot_topic_bubble(
     *,
     top_n_labels: int = 10,
     figsize: tuple = (12, 8),
-    title: str = "Topic landscape: variance vs. mean partial correlation with hits",
+    title: str = "Topic landscape: variance vs. mean partial correlation with references",
 ) -> plt.Figure:
-    """
-    Bubble chart: x=variance, y=mean partial-corr, size=max partial-corr,
-    colour=corpus prominence (topic_z).  Labels the top_n_labels topics.
-    """
+    """Bubble chart: x=variance, y=mean corr, size=peak corr, colour=corpus prominence."""
     df = scatter_df.copy()
     df["topic_id"] = df.index
     df["label"] = df["topic_id"].map(ks).str[:40]
     size_norm = (df["max_corr"] - df["max_corr"].min()) / (df["max_corr"].max() - df["max_corr"].min())
     df["bubble"] = 10 + 200 * size_norm
-
     fig, ax = plt.subplots(figsize=figsize)
-    sc = ax.scatter(
-        df["variance"], df["mean_corr"],
-        s=df["bubble"], c=df["topic_z"],
-        cmap="Blues_r", alpha=0.7, linewidths=0.4, edgecolors="grey"
-    )
+    sc = ax.scatter(df["variance"], df["mean_corr"], s=df["bubble"], c=df["topic_z"],
+                    cmap="Blues_r", alpha=0.7, linewidths=0.4, edgecolors="grey")
     plt.colorbar(sc, ax=ax, label="Corpus prominence (log2-softmax z)")
-
-    top = df.nlargest(top_n_labels, "max_corr")
-    for _, row in top.iterrows():
+    for _, row in df.nlargest(top_n_labels, "max_corr").iterrows():
         ax.annotate(row["label"], (row["variance"], row["mean_corr"]),
-                    fontsize=7, alpha=0.9,
-                    xytext=(4, 4), textcoords="offset points")
-
+                    fontsize=7, alpha=0.9, xytext=(4, 4), textcoords="offset points")
     ax.set_xscale("log")
     ax.set_xlabel("Variance of partial correlation over time")
-    ax.set_ylabel("Mean partial correlation with hits")
+    ax.set_ylabel("Mean partial correlation with references")
     ax.set_title(title, loc="left")
     fig.tight_layout()
     return fig
@@ -484,12 +492,9 @@ def plot_topic_heatmap(
     figsize: tuple = (14, 6),
     title: str = "Partial correlation heatmap (selected topics)",
 ) -> plt.Figure:
-    """
-    Heatmap of EWM-smoothed partial correlations for selected topics over time.
-    """
+    """Heatmap of EWM-smoothed partial correlations for selected topics over time."""
     labels = [f"{t} {ks[t]}" for t in topic_ids if f"{t} {ks[t]}" in resp.columns]
     subset = resp[labels].ewm(span=ewm_span).mean()
-
     fig, ax = plt.subplots(figsize=figsize)
     sns.heatmap(subset.T, ax=ax, cmap="RdBu_r", center=0,
                 xticklabels=max(1, len(subset) // 20),
