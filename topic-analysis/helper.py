@@ -436,27 +436,58 @@ def plot_topic_timeseries(
     topic_id: int,
     ks: dict,
     *,
+    ax: plt.Axes | None = None,
     ewm_span: int = 20,
     figsize: tuple = (12, 4),
-) -> plt.Figure:
-    """Partial-corr with references (blue) vs. overall topic prevalence (red) for one topic."""
+) -> tuple[plt.Figure, plt.Axes, plt.Axes]:
+    """
+    Plot partial correlation (blue) vs topic prevalence (red)
+    for a single topic.
+
+    Parameters
+    ----------
+    ax : matplotlib Axes, optional
+        Existing axis to draw on. If None, creates a new figure.
+    """
+
     label = f"{topic_id} {ks[topic_id]}"
     if label not in resp.columns:
         raise KeyError(f"Topic {topic_id} not in resp columns — check ks dict")
-    fig, ax = plt.subplots(figsize=figsize)
+
+    # Create axes if not supplied
+    if ax is None:
+        fig, ax = plt.subplots(figsize=figsize)
+    else:
+        fig = ax.figure
+
     ax2 = ax.twinx()
-    series = resp[label].ewm(span=ewm_span).mean()
-    series.index = pd.PeriodIndex(series.index, freq="Q").to_timestamp()
-    series.plot(ax=ax, color="#4878CF", linewidth=1.5)
-    dist_averaged[topic_id].ewm(span=ewm_span).mean().plot(ax=ax2, color="#D65F5F",
-                                                            linewidth=1.5, linestyle="--")
+
+    # Left axis series
+    series1 = resp[label].ewm(span=ewm_span).mean()
+    series1.index = pd.PeriodIndex(series1.index, freq="Q").to_timestamp()
+
+    # Right axis series
+    series2 = dist_averaged[topic_id].ewm(span=ewm_span).mean()
+    series2.index = pd.PeriodIndex(series2.index, freq="Q").to_timestamp()
+
+    series1.plot(ax=ax, color="#4878CF", linewidth=1.5)
+
+    series2.plot(
+        ax=ax2,
+        color="#D65F5F",
+        linewidth=1.5,
+        linestyle="--",
+    )
+
     ax.set_title(f"Topic {topic_id}: {ks[topic_id][:60]}", loc="left")
+
     ax.set_ylabel("Partial corr with references", color="#4878CF")
     ax2.set_ylabel("Topic prevalence (corpus)", color="#D65F5F")
+
     ax.tick_params(axis="y", colors="#4878CF")
     ax2.tick_params(axis="y", colors="#D65F5F")
-    fig.tight_layout()
-    return fig
+
+    return fig, ax, ax2
 
 
 def plot_topic_bubble(
